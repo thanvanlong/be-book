@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.List;
 
 @EnableWebSecurity
@@ -61,7 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://foodauth-1551d.web.app", "http://localhost", "http://localhost:3001", "http://localhost:3000", "https://foodapp-d55ab.web.app"));
+        configuration.setAllowedOrigins(
+                List.of("https://7be7-123-16-75-187.ngrok-free.app",
+                        "http://localhost", "http://localhost:3001",
+                        "http://localhost:3000", "https://foodapp-d55ab.web.app", "http://localhost:8080/swagger-ui.html"));
         configuration.setAllowedMethods(List.of("HEAD",
                 "GET", "POST", "PUT", "DELETE", "PATCH"));
 //        // setAllowCredentials(true) is important, otherwise:

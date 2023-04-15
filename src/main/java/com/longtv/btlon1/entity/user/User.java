@@ -1,6 +1,7 @@
 package com.longtv.btlon1.entity.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
@@ -25,9 +25,9 @@ public class User implements UserDetails {
     private long id;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
+    private String phoneNumber;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
@@ -36,6 +36,13 @@ public class User implements UserDetails {
         Collection<SimpleGrantedAuthority> role = new ArrayList<>();
         roles.stream().forEach(role1 -> role.add(new SimpleGrantedAuthority(role1.getName())));
         return role;
+    }
+
+    public User(String email, String name, String address, String phoneNumber) {
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

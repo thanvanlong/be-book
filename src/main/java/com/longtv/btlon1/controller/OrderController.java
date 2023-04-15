@@ -35,7 +35,7 @@ public class OrderController {
     public ResponseEntity<ResponseDTO<?>> orderBook(@RequestBody Order order) {
         System.out.println("longtv:   "+ order.getBooks().size());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.toString());
+        System.out.println(principal.toString() + " anth order");
         User user = userService.getOneByEmail(principal.toString());
         Iterator<Book> iterable = order.getBooks().iterator();
         int i = 0;

@@ -112,7 +112,7 @@ public class BookController {
             return ResponseEntity.ok(new ResponseDTO<String>("Upload ảnh lên không thành công", "404", "Failed"));
         }
         LocalDate dt = LocalDate.parse(book.getPublishDate());
-        if (dt.isBefore(LocalDate.now())) {
+        if (dt.isAfter(LocalDate.now())) {
             return ResponseEntity.ok(new ResponseDTO<String>("Ngày phát hành phải lớn hơn hoặc là ngày hiện tại", "404", "Failed"));
         }
         book.setPublishedDate(dt);
@@ -178,7 +178,7 @@ public class BookController {
         }
 
         LocalDate dt = LocalDate.parse(book.getPublishDate());
-        if (dt.isBefore(LocalDate.now())) {
+        if (dt.isAfter(LocalDate.now())) {
             return ResponseEntity.ok(new ResponseDTO<String>("Ngày phát hành phải lớn hơn hoặc là ngày hiện tại", "404", "Failed"));
         }
         book.setPublishedDate(dt);

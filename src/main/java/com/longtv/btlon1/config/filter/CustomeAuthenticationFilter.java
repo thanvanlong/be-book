@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -34,12 +35,12 @@ public class CustomeAuthenticationFilter extends UsernamePasswordAuthenticationF
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String phoneNumber = request.getParameter("email");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(phoneNumber + " longtv");
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(phoneNumber, password);
-        System.out.println(usernamePasswordAuthenticationToken);
+                new UsernamePasswordAuthenticationToken(email, password);
+        SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(usernamePasswordAuthenticationToken));
         return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
     }
 
@@ -48,7 +49,8 @@ public class CustomeAuthenticationFilter extends UsernamePasswordAuthenticationF
         User user = (User) authResult.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
         String access_token = JWT.create()
-                .withSubject(user.getEmail() + "-" + user.getUsername() + "-" + user.getFirstName())
+                .withSubject(user.getName())
+                .withKeyId(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 1000 * 1000))
                 .withIssuer(request.getRequestURI())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))

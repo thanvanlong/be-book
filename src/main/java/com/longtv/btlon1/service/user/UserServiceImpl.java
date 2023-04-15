@@ -43,6 +43,31 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User updateUser(User user) {
+        User u = userRepo.findByEmail(user.getEmail());
+        if (u == null) {
+            return null;
+        } else {
+            u.setAddress(user.getAddress() != null ? user.getAddress() : u.getAddress());
+            if (user.getPassword() != null) {
+                u.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            if (user.getPhoneNumber() != null) {
+                u.setPhoneNumber(user.getPhoneNumber());
+            }
+            if (user.getUsername() != null) {
+                u.setName(user.getName());
+            }
+            try {
+                userRepo.save(u);
+                return u;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(username);
         System.out.println("longtv: mail " + username);

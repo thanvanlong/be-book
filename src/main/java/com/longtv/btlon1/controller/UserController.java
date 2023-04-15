@@ -12,9 +12,13 @@ import com.longtv.btlon1.entity.user.User;
 import com.longtv.btlon1.service.user.RoleService;
 import com.longtv.btlon1.service.user.UserService;
 import com.longtv.btlon1.utils.StringUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -31,6 +35,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
+@Api
 public class UserController {
 
     @Autowired
@@ -38,6 +43,7 @@ public class UserController {
     @Autowired
     RoleService roleService;
     @PostMapping("/save")
+    @ApiOperation(value = "mo ta")
     public ResponseEntity<ResponseDTO<?>> saveUser(@RequestBody User user) {
 
         if (!StringUtils.validate(user.getEmail())) {
@@ -85,6 +91,16 @@ public class UserController {
     }
 
 
+    @GetMapping("/me")
+    public ResponseEntity<ResponseDTO<User>> getMe() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = service.getOneByEmail(principal.toString());
+
+        return ResponseEntity.ok(
+                new ResponseDTO<User>(
+                        new User(user.getEmail(), user.getName(), user.getAddress(), user.getPhoneNumber() ), "200", "Success"));
+    }
+
     @PostMapping("/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -98,7 +114,7 @@ public class UserController {
             String phonenNumber = decodedJWT.getSubject();
             User user = service.getOneByEmail(phonenNumber);
             String access_token = JWT.create()
-                    .withSubject(user.getEmail() + "-" + user.getUsername() + "-" + user.getFirstName())
+                    .withSubject(user.getEmail() + "-" + user.getUsername() + "-" + user.getPhoneNumber())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 1000 * 1000))
                     .withIssuer(request.getRequestURI())
                     .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
@@ -115,6 +131,17 @@ public class UserController {
             response.setStatus(400);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDTO<?>> updateUser(@RequestBody User user) {
+        User u = service.updateUser(user);
+
+        if (u == null) {
+            return ResponseEntity.ok(new ResponseDTO<>("Cập nhật thất bại", "400", "Fail"));
+        } else {
+            return ResponseEntity.ok(new ResponseDTO<>(u, "200", "Success"));
         }
     }
 

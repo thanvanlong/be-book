@@ -7,4 +7,6 @@ public interface UserService {
     User getOneByEmailAndPass(User user);
 
     User getOneByEmail(String email);
+
+    User updateUser(User user);
 }
