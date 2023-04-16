@@ -163,7 +163,7 @@ public class UserController {
         if (u == null) {
             return ResponseEntity.ok(new ResponseDTO<>("Cập nhật thất bại", "400", "Fail"));
         } else {
-            return ResponseEntity.ok(new ResponseDTO<>(u, "200", "Success"));
+            return ResponseEntity.ok(new ResponseDTO<>(new User(u.getEmail(), u.getName(), u.getAddress(), u.getPhoneNumber() ), "200", "Success"));
         }
     }
 
