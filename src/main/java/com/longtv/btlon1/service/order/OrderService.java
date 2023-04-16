@@ -12,4 +12,6 @@ public interface OrderService {
     List<Order> getByUserId(long id);
 
     void update(long id, int status);
+
+    Order getOneOrderById(long id);
 }

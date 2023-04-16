@@ -44,7 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-        http.authorizeRequests().antMatchers("/api/login", "/api/refresh", "/api/save", "/api/user/active/**", "/api/order/get/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/login", "/api/refresh",
+                "/api/save", "/api/user/active/**", "/api/order/get/**",
+                "/swagger-ui/**", "/v3/api-docs/**", "/api/forget-password", "/api/book/get").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/category/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/book/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/user/forgot").permitAll();
@@ -61,8 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(
-                List.of("https://7be7-123-16-75-187.ngrok-free.app",
+                List.of("https://6cff-123-16-75-187.ngrok-free.app",
                         "http://localhost", "http://localhost:3001",
+                        "https://cf85-123-16-75-187.ngrok-free.app",
                         "http://localhost:3000", "https://foodapp-d55ab.web.app", "http://localhost:8080/swagger-ui.html"));
         configuration.setAllowedMethods(List.of("HEAD",
                 "GET", "POST", "PUT", "DELETE", "PATCH"));

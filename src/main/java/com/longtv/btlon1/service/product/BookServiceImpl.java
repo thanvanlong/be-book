@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<Book> getAll() {
-        return bookRepo.findAll();
+        return bookRepo.findAllByOrderByUpdateAtDesc();
     }
 
     @Override

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -105,7 +106,6 @@ public class BookController {
         if (!Arrays.asList(typeImg).contains(file.getContentType())) {
             return ResponseEntity.ok(new ResponseDTO<String>("Thể loại của ảnh không hợp lệ", "404", "Failed"));
         }
-        System.out.println(file.getContentType());
         try {
              imgUrl = CloudinaryUtils.uploadImg(file.getBytes(), book.getName());
         } catch (IOException e) {
@@ -115,6 +115,7 @@ public class BookController {
         if (dt.isAfter(LocalDate.now())) {
             return ResponseEntity.ok(new ResponseDTO<String>("Ngày phát hành phải lớn hơn hoặc là ngày hiện tại", "404", "Failed"));
         }
+        book.setUpdateAt(LocalDateTime.now());
         book.setPublishedDate(dt);
         book.setCategories(categories);
         book.setImgUrl(imgUrl);
@@ -181,6 +182,7 @@ public class BookController {
         if (dt.isAfter(LocalDate.now())) {
             return ResponseEntity.ok(new ResponseDTO<String>("Ngày phát hành phải lớn hơn hoặc là ngày hiện tại", "404", "Failed"));
         }
+        book.setUpdateAt(LocalDateTime.now());
         book.setPublishedDate(dt);
         book.setCategories(categories);
         if (!imgUrl.matches("")) {

@@ -4,6 +4,7 @@ import com.longtv.btlon1.entity.product.Book;
 import com.longtv.btlon1.entity.product.Category;
 import com.longtv.btlon1.entity.user.Role;
 import com.longtv.btlon1.repo.product.BookRepo;
+import com.longtv.btlon1.service.mail.EmailSender;
 import com.longtv.btlon1.service.product.BookService;
 import com.longtv.btlon1.service.product.CategoryService;
 import com.longtv.btlon1.service.user.RoleService;
@@ -33,7 +34,8 @@ public class Btlon1Application {
     RoleService roleService;
     @Autowired
     BookRepo bookRepo;
-
+    @Autowired
+    EmailSender emailSender;
     public static void main(String[] args) {
         SpringApplication.run(Btlon1Application.class, args);
     }

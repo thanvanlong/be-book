@@ -28,10 +28,11 @@ public class Order {
     private User user;
     private String name;
     private String address;
-    private String phone;
+    private String phoneNumber;
     private LocalDateTime localDateTime;
     private int status;
     private int paymentType;
     private String note;
+    private LocalDateTime createdAt;
 
 }

@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longtv.btlon1.entity.ResponseDTO;
 import com.longtv.btlon1.entity.user.Role;
 import com.longtv.btlon1.entity.user.User;
+import com.longtv.btlon1.service.mail.EmailSender;
+import com.longtv.btlon1.service.mail.EmailValidator;
 import com.longtv.btlon1.service.user.RoleService;
 import com.longtv.btlon1.service.user.UserService;
 import com.longtv.btlon1.utils.StringUtils;
@@ -42,6 +44,8 @@ public class UserController {
     UserService service;
     @Autowired
     RoleService roleService;
+    @Autowired
+    EmailSender emailSender;
     @PostMapping("/save")
     @ApiOperation(value = "mo ta")
     public ResponseEntity<ResponseDTO<?>> saveUser(@RequestBody User user) {
@@ -131,6 +135,24 @@ public class UserController {
             response.setStatus(400);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+        }
+    }
+
+    @PutMapping("/forget-password")
+    public ResponseEntity<ResponseDTO<?>> forgetPass(@RequestParam String email) {
+        if (new EmailValidator().test(email)) {
+            User user = service.getOneByEmail(email);
+            if (user != null) {
+                String newPass = StringUtils.getNewPass(10);
+                emailSender.send(email, newPass);
+                user.setPassword(newPass);
+                service.save(user);
+                return ResponseEntity.ok(new ResponseDTO<>("Mật khẩu mới đã được gửi trong mail của bạn", "200", "Failed"));
+            } else {
+                return ResponseEntity.ok(new ResponseDTO<>("Người dùng không tồn tại", "400", "Failed"));
+            }
+        } else {
+            return ResponseEntity.ok(new ResponseDTO<>("Email không hợp lê!!!", "400", "Failed"));
         }
     }
 

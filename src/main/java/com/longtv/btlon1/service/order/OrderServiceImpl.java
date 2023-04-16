@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Order> getAll() {
-        return orderRepo.findAll();
+        return orderRepo.findAllByOrderByCreatedAtDesc();
     }
 
     @Override
@@ -40,5 +40,11 @@ public class OrderServiceImpl implements OrderService{
         Order order = orderRepo.findById(id);
         order.setStatus(status);
         orderRepo.save(order);
+    }
+
+    @Override
+    public Order getOneOrderById(long id) {
+        Order order = orderRepo.findById(id);
+        return order;
     }
 }

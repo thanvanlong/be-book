@@ -7,6 +7,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -38,8 +39,7 @@ public class Book {
     @NonNull
     private int totalQuantity;
     private int quanityOrdered;
-
-
+    private LocalDateTime updateAt;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
     @JoinTable(
             name = "book_category",

@@ -53,6 +53,7 @@ public class OrderController {
             i++;
         }
         order.setUser(user);
+        order.setCreatedAt(LocalDateTime.now());
         order.setLocalDateTime(LocalDateTime.now());
         boolean check = orderService.save(order);
         if (order.getPaymentType() == 0) {
@@ -76,6 +77,11 @@ public class OrderController {
     @GetMapping("/order/get")
     public List<Order> getAll() {
         return orderService.getAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ResponseDTO<Order>> getOneOrderById(@PathVariable String id) {
+        return ResponseEntity.ok(new ResponseDTO<>(orderService.getOneOrderById(Long.parseLong(id)), "200","Successs" ));
     }
 
     @GetMapping("/get")

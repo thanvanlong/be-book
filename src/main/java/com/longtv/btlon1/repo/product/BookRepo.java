@@ -11,5 +11,7 @@ public interface BookRepo extends JpaRepository<Book, Long> {
     Book findById(long id);
     Book findByName(String name);
 
+    List<Book> findAllByOrderByUpdateAtDesc();
+
     List<Book> findAllByNameContains(String name, Pageable pageable);
 }
