@@ -22,7 +22,7 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public List<Rating> getRatingByBookId(long id) {
+    public List<Rating> getRatingByBookId(String id) {
         return ratingRepo.findByBookId(id);
     }
 }

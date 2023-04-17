@@ -70,7 +70,7 @@ public class UserController {
             return ResponseEntity.ok(new ResponseDTO<>("Đăng kí không thành công", "400", "Failed"));
         }
 
-        return ResponseEntity.ok(new ResponseDTO<User>(user, "200", "Success"));
+        return ResponseEntity.ok(new ResponseDTO<>(true, "200", "Success"));
     }
 
     @PostMapping("/login")

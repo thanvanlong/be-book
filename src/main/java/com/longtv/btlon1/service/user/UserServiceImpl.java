@@ -2,6 +2,7 @@ package com.longtv.btlon1.service.user;
 
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.longtv.btlon1.entity.user.Role;
 import com.longtv.btlon1.entity.user.User;
 import com.longtv.btlon1.repo.user.UserRepo;
 import lombok.RequiredArgsConstructor;

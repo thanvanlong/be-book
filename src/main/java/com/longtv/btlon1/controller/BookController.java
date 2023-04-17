@@ -46,8 +46,7 @@ public class BookController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ResponseDTO<?>> getOne(@PathVariable("id") String id) {
-        long idBook = Long.parseLong(id);
-        Book book = service.getOneById(idBook);
+        Book book = service.getOneById(id);
         if (book == null) {
             return ResponseEntity.ok(new ResponseDTO<String>("Không tìm thấy sách", "404", "Failed"));
         }
@@ -57,12 +56,12 @@ public class BookController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ResponseDTO<String>> deleteBook(@PathVariable("id") String id) {
-        Book book = service.getOneById(Long.parseLong(id));
+        Book book = service.getOneById(id);
         if (book == null) {
             return ResponseEntity.ok(new ResponseDTO<String>("Không tìm thấy sách để xoá", "404", "Failed"));
         }
 
-        boolean rs = service.deleteOneById(Long.parseLong(id));
+        boolean rs = service.deleteOneById(id);
 
         if (!rs) {
             return ResponseEntity.ok(new ResponseDTO<String>("Xoá sách không thành công", "404", "Failed"));

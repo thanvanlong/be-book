@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class State {
-    private long id;
+    private String id;
     private int status;
 }

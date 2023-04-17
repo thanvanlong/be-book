@@ -5,26 +5,23 @@ import com.longtv.btlon1.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "Booking")
+@Document("Booking")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @ManyToMany(fetch = FetchType.EAGER)
+    private String id;
     private Set<Book> books;
-    @ElementCollection
     private List<Integer> quanityList;
-    @OneToOne
     private User user;
     private String name;
     private String address;

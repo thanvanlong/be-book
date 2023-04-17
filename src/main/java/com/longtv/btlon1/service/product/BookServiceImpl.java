@@ -27,8 +27,8 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book getOneById(long id) {
-        return bookRepo.findById(id);
+    public Book getOneById(String id) {
+        return bookRepo.findById(id).get();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public boolean deleteOneById(long id) {
+    public boolean deleteOneById(String id) {
         bookRepo.deleteById(id);
         return true;
     }

@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface OrderService {
     boolean save(Order order);
-    List<Order> getOrderByUserIdAndStatus(long id, int status);
+    List<Order> getOrderByUserIdAndStatus(String id, int status);
 
     List<Order> getAll();
-    List<Order> getByUserId(long id);
+    List<Order> getByUserId(String id);
 
-    void update(long id, int status);
+    void update(String id, int status);
 
-    Order getOneOrderById(long id);
+    Order getOneOrderById(String id);
 }

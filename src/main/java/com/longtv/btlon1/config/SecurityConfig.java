@@ -63,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(
-                List.of("https://6cff-123-16-75-187.ngrok-free.app",
+                List.of("http://192.168.1.16:8080",
+                        "https://6cff-123-16-75-187.ngrok-free.app",
                         "http://localhost", "http://localhost:3001",
                         "https://cf85-123-16-75-187.ngrok-free.app",
                         "http://localhost:3000", "https://foodapp-d55ab.web.app", "http://localhost:8080/swagger-ui.html"));

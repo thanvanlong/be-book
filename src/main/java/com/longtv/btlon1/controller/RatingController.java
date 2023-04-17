@@ -24,7 +24,7 @@ public class RatingController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ResponseDTO<List<Rating>>> getRatingByBoodId(@PathVariable("id") String id) {
-        return ResponseEntity.ok(new ResponseDTO<>(service.getRatingByBookId(Long.parseLong(id)), "200", ""));
+        return ResponseEntity.ok(new ResponseDTO<>(service.getRatingByBookId(id), "200", ""));
     }
 
     @PostMapping("/post")

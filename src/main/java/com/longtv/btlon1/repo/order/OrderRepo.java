@@ -1,17 +1,17 @@
 package com.longtv.btlon1.repo.order;
 
 import com.longtv.btlon1.entity.order.Order;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface OrderRepo extends JpaRepository<Order, Long> {
-    List<Order> findByUserIdAndAndStatus(long id, long status);
-    List<Order> findByUserId(long id);
+public interface OrderRepo extends MongoRepository<Order, String> {
+    List<Order> findByUserIdAndAndStatus(String id, long status);
+    List<Order> findByUserId(String id);
 
     List<Order> findAllByOrderByCreatedAtDesc();
 
-    Order findById(long id);
+    Optional<Order> findById(String id);
 
 }

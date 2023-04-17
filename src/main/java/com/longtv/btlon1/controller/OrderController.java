@@ -81,7 +81,7 @@ public class OrderController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ResponseDTO<Order>> getOneOrderById(@PathVariable String id) {
-        return ResponseEntity.ok(new ResponseDTO<>(orderService.getOneOrderById(Long.parseLong(id)), "200","Successs" ));
+        return ResponseEntity.ok(new ResponseDTO<>(orderService.getOneOrderById(id), "200","Successs" ));
     }
 
     @GetMapping("/get")
@@ -95,7 +95,7 @@ public class OrderController {
     @PutMapping("/update")
     public void update(@RequestBody State state) {
         System.out.println("longtv----------" + " " + state.getId());
-        orderService.update(state.getId(), state.getStatus());
+        orderService.update(String.valueOf(state.getId()), state.getStatus());
     }
 
 

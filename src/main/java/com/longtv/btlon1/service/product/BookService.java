@@ -7,11 +7,11 @@ import java.util.List;
 public interface BookService {
     List<Book> getAllWithPage(int page);
     List<Book> getAll();
-    Book getOneById(long id);
+    Book getOneById(String id);
     boolean save(Book book);
     boolean update(Book book);
 
     Book getOneByName(String name);
 
-    boolean deleteOneById(long id);
+    boolean deleteOneById(String id);
 }

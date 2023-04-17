@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class OrderServiceImpl implements OrderService{
     @Autowired
@@ -21,7 +23,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<Order> getOrderByUserIdAndStatus(long id, int status) {
+    public List<Order> getOrderByUserIdAndStatus(String id, int status) {
         return orderRepo.findByUserIdAndAndStatus(id, status);
     }
 
@@ -31,20 +33,20 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<Order> getByUserId(long id) {
+    public List<Order> getByUserId(String id) {
         return orderRepo.findByUserId(id);
     }
 
     @Override
-    public void update(long id, int status) {
-        Order order = orderRepo.findById(id);
+    public void update(String id, int status) {
+        Order order = orderRepo.findById(id).get();
         order.setStatus(status);
         orderRepo.save(order);
     }
 
     @Override
-    public Order getOneOrderById(long id) {
-        Order order = orderRepo.findById(id);
-        return order;
+    public Order getOneOrderById(String id) {
+        Optional<Order> order = orderRepo.findById(id);
+        return order.get();
     }
 }

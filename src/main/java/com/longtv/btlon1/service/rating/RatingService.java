@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface RatingService {
     boolean saveRating(Rating rating);
-    List<Rating> getRatingByBookId(long id);
+    List<Rating> getRatingByBookId(String id);
 }
